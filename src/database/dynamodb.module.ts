@@ -11,7 +11,7 @@ import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
         const accessKeyId = process.env.PROVIDER_ACCESS_KEY_ID;
         const secretAccessKey = process.env.PROVIDER_SECRET_ACCESS_KEY;
         const sessionToken = process.env.AWS_SESSION_TOKEN;
-        const region = process.env.PROVIDER_BUCKET;
+        const region = process.env.AWS_REGION;
 
         if (!accessKeyId || !secretAccessKey || !region) {
           throw new Error(
