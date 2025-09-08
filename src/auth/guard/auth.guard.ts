@@ -4,45 +4,45 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { AuthPayload } from './auth-payload.interface';
+
+interface AuthPayload {
+  sub: string; // O ID do usuário geralmente está em 'sub'
+  email: string;
+  // ...outras propriedades do seu payload
+}
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private configService: ConfigService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest<Request>();
-    const rawAuthHeader =
-      request.headers['authorization'] ?? request.headers['Authorization'];
-
-    const authHeader: string | undefined =
-      typeof rawAuthHeader === 'string'
-        ? rawAuthHeader
-        : Array.isArray(rawAuthHeader)
-          ? rawAuthHeader[0]
-          : undefined;
-
-    if (!authHeader) {
-      throw new UnauthorizedException('No token provided');
+    const request = context.switchToHttp().getRequest();
+    const token = this.extractTokenFromHeader(request);
+    if (!token) {
+      throw new UnauthorizedException();
     }
-
-    const parts = authHeader.split(' ');
-    if (parts.length !== 2 || parts[0] !== 'Bearer') {
-      throw new UnauthorizedException('Invalid token format');
-    }
-
-    const token = parts[1];
-
     try {
-      const payload = await this.jwtService.verifyAsync<AuthPayload>(token, {
-        algorithms: ['HS256'],
+      const payload: AuthPayload = await this.jwtService.verifyAsync(token, {
+        secret: this.configService.get<string>('JWT_SECRET'),
       });
-      request.user = payload;
-      return true;
+
+      request.user = {
+        id: payload.sub,
+      };
     } catch {
-      throw new UnauthorizedException('Invalid or expired token');
+      throw new UnauthorizedException();
     }
+    return true;
+  }
+
+  private extractTokenFromHeader(request: Request): string | undefined {
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 }
