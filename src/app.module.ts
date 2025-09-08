@@ -4,15 +4,16 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { DynamoDBModule } from './database/dynamodb.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  // Combine todos os módulos em um único array 'imports'
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Isso garante que as variáveis de ambiente fiquem disponíveis em todo o app
+      isGlobal: true,
     }),
-    UsersModule, // Seu módulo de usuários
-    DynamoDBModule, // Seu módulo do DynamoDB
+    UsersModule,
+    DynamoDBModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

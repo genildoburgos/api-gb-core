@@ -1,11 +1,17 @@
-import { Injectable, Inject } from '@nestjs/common';
+/* eslint-disable */
+import { Injectable, Inject, Logger } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb';
+import {
+  DynamoDBDocumentClient,
+  PutCommand,
+  ScanCommand,
+} from '@aws-sdk/lib-dynamodb';
 import { v4 as uuidv4 } from 'uuid';
-import { ScanCommand } from '@aws-sdk/client-dynamodb';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
+
   constructor(
     @Inject('DYNAMO_CLIENT')
     private readonly dynamoClient: DynamoDBDocumentClient,
@@ -13,28 +19,59 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const userId = uuidv4();
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(createUserDto.senha, saltRounds);
+
     const params = {
       TableName: 'Users',
       Item: {
         id: userId,
         nome: createUserDto.nome,
-        emial: createUserDto.email,
-        senha: createUserDto.senha,
+        email: createUserDto.email,
+        senha: hashedPassword,
       },
     };
 
     await this.dynamoClient.send(new PutCommand(params));
 
-    return { id: userId, ...createUserDto };
+    const { senha, ...result } = createUserDto;
+    return { id: userId, ...result };
   }
 
   async findAll() {
     const params = {
       TableName: 'Users',
     };
-
     const result = await this.dynamoClient.send(new ScanCommand(params));
 
-    return result.Items || [];
+    if (result.Items) {
+      return result.Items.map((item) => {
+        const { senha, ...user } = item;
+        return user;
+      });
+    }
+    return [];
+  }
+
+  async findOneByEmail(email: string): Promise<any | undefined> {
+
+    const params = {
+      TableName: 'Users',
+      FilterExpression: 'email = :email',
+      ExpressionAttributeValues: {
+        ':email': email,
+      },
+    };
+
+    try {
+      const result = await this.dynamoClient.send(new ScanCommand(params));
+      if (result.Items && result.Items.length > 0) {
+        return result.Items[0];
+      } else {
+        return undefined;
+      }
+    } catch (error) {
+      return undefined;
+    }
   }
 }
