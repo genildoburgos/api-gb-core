@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DynamoDBModule } from './database/dynamodb.module';
 import { AuthModule } from './auth/auth.module';
 import { AwsModule } from './aws/aws.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AwsModule } from './aws/aws.module';
     DynamoDBModule,
     AuthModule,
     AwsModule,
+    ImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

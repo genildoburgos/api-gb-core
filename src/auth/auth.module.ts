@@ -6,10 +6,12 @@ import { UsersModule } from '../users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthGuard } from './guard/auth.guard';
 import { RolesGuard } from './guard/roles.guard';
+import { ImagesModule } from 'src/images/images.module';
 
 @Module({
   imports: [
     forwardRef(() => UsersModule),
+    forwardRef(() => ImagesModule),
     ConfigModule.forRoot({ isGlobal: true }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
