@@ -1,10 +1,8 @@
 /* eslint-disable */
-
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuidv4 } from "uuid";
-
 
 @Injectable()
 export class S3Service{
@@ -29,7 +27,7 @@ export class S3Service{
         });
     }
 
-    async uploadFile(file: Express.Multer.File, pathPrefix: string): Promise<string> {
+    async uploadFile(file: Express.Multer.File, pathPrefix: string): Promise<{ url: string, key: string }> {
         const fileExtension = file.originalname.split('.').pop();
         const key = `${pathPrefix}/${uuidv4()}.${fileExtension}`;
 
@@ -44,13 +42,25 @@ export class S3Service{
             await this.s3Client.send(command);
             //contruir a URL do arquivo
             const fileUrl = `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${key}`;
-            return fileUrl;
+            return { url: fileUrl, key };
         } catch (error){
             console.error('Error uploading file to S3:', error);
             throw new InternalServerErrorException('Error uploading file');
         }
     }
 
+    async deleteFile(key: string): Promise<void> {
+        const command = new DeleteObjectCommand({
+            Bucket: this.bucketName,
+            Key: key,
+        });
+
+        try {
+            await this.s3Client.send(command);
+        } catch (error) {
+            console.error('Error deleting file from S3:', error);
+            throw new InternalServerErrorException('Error deleting file');
+        }
+    }
+
 }
-
-
