@@ -62,8 +62,8 @@ The API is fully unit-tested with **Jest**, ensuring high reliability and code q
 
 1.  **Clone the repository**
     ```bash
-    git clone https://your-repository-url.com/project-name
-    cd project-name
+    git clone https://github.com/genildoburgos/ANJUN25_D03_COMPASSSTORE
+    cd ANJUN25_D03_COMPASSSTORE
     ```
 
 2.  **Install dependencies**
