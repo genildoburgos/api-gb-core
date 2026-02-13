@@ -5,14 +5,35 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ImagesService } from './images.service';
 import type { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiConsumes,
+  ApiBody,
+} from '@nestjs/swagger';
 
-@UseGuards(AuthGuard) 
+@ApiTags('images')
+@ApiBearerAuth('JWT')
+@UseGuards(AuthGuard)
 @Controller('images')
 export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
+  @ApiOperation({ summary: 'Upload an image file' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: { type: 'string', format: 'binary' },
+      },
+    },
+  })
+  @ApiResponse({ status: 201, description: 'Image uploaded successfully' })
   async uploadImage(
     @Req() req: Request,
     @UploadedFile(
@@ -34,6 +55,8 @@ export class ImagesController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get authenticated user images' })
+  @ApiResponse({ status: 200, description: 'Paginated images list' })
   async getUserImages(
     @Req() req: Request,
     @Query('search') search?: string,
@@ -45,6 +68,8 @@ export class ImagesController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete an image by id' })
+  @ApiResponse({ status: 200, description: 'Image deleted successfully' })
   async deleteImage(
     @Req() req: Request,
     @Param('id') imageId: string,
@@ -54,6 +79,8 @@ export class ImagesController {
   }
 
   @Get('export/csv')
+  @ApiOperation({ summary: 'Export user images as CSV' })
+  @ApiResponse({ status: 200, description: 'CSV file stream' })
   async exportImagesAsCsv(
     @Req() req: Request,
     @Res() res: Response, 
