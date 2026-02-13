@@ -33,3 +33,8 @@ jobs:
         run: npm run build
         env:
           CI: true
+          
+      - name: Test
+        run: npm test
+        env:
+          CI: true
