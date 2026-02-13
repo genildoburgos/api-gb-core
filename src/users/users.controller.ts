@@ -12,7 +12,7 @@ export class UsersController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
-  @ApiResponse({ status: 201, description: 'User created' })
+  @ApiResponse({ status: 201, description: 'User created', type: CreateUserDto })
   async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
