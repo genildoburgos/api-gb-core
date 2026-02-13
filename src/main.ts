@@ -17,6 +17,15 @@ async function bootstrap() {
     )
     .setLicense('MIT', 'https://opensource.org/licenses/MIT')
     .addTag('tags')
+    // Add JWT bearer security so the Swagger UI shows an Authorize button
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'JWT',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
