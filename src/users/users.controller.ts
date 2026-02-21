@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AuthGuard } from '../auth/guard/auth.guard';
@@ -14,6 +14,18 @@ export class UsersController {
   @ApiOperation({ summary: 'Create a new user' })
   @ApiResponse({ status: 201, description: 'User created', type: CreateUserDto })
   async create(@Body() createUserDto: CreateUserDto) {
+    const allowPublic = process.env.ALLOW_PUBLIC_REGISTRATION === 'true';
+    const adminSecret = process.env.ADMIN_REGISTRATION_SECRET;
+
+    const providedAdminToken = createUserDto.adminToken;
+
+    if (!allowPublic && providedAdminToken !== adminSecret) {
+      // Return exact JSON required and 403 status
+      throw new HttpException({ error: 'O cadastro público está desativado no momento.' }, HttpStatus.FORBIDDEN);
+    }
+
+    delete createUserDto.adminToken;
+
     return this.usersService.create(createUserDto);
   }
 
