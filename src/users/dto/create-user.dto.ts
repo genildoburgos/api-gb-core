@@ -9,4 +9,7 @@ export class CreateUserDto {
 
   @ApiProperty({ example: 'minhaSenha123', minLength: 6 })
   senha: string;
+
+  @ApiProperty({ example: 'token-admin', required: false })
+  adminToken?: string;
 }
