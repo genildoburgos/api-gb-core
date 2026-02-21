@@ -19,9 +19,17 @@ export class UsersController {
 
     const providedAdminToken = createUserDto.adminToken;
 
-    if (!allowPublic && providedAdminToken !== adminSecret) {
-      // Return exact JSON required and 403 status
-      throw new HttpException({ error: 'O cadastro público está desativado no momento.' }, HttpStatus.FORBIDDEN);
+    if (!allowPublic) {
+      const adminSecretConfigured = !!adminSecret;
+      const hasValidAdminToken = !!providedAdminToken && providedAdminToken === adminSecret;
+
+      if (!adminSecretConfigured || !hasValidAdminToken) {
+        // Return exact JSON required and 403 status
+        throw new HttpException(
+          { error: 'O cadastro público está desativado no momento.' },
+          HttpStatus.FORBIDDEN,
+        );
+      }
     }
 
     delete createUserDto.adminToken;
