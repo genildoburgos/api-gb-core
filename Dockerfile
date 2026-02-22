@@ -1,23 +1,24 @@
-# Usa a imagem base do Node.js
-FROM node:18-alpine
+FROM node:18-alpine AS builder
 
-# Instala dependências do sistema operacional
-RUN apk add --no-cache openssl
-
-# Define o diretório de trabalho
 WORKDIR /app
 
-# Otimiza o cache do Docker, copiando primeiro os arquivos de dependência
 COPY package*.json ./
-
-# Instala as dependências do projeto
 RUN npm install
 
-# Copia o restante do código da aplicação
 COPY . .
+RUN npm run build
 
-# Expõe a porta que a aplicação usará
+FROM node:18-alpine
+
+RUN apk add --no-cache openssl
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install --omit=dev
+
+COPY --from=builder /app/dist ./dist
+
 EXPOSE 3000
 
-# Define o comando padrão para iniciar a aplicação
-CMD ["npm", "run", "start:dev"]
+CMD ["node", "dist/main"]
