@@ -1,10 +1,10 @@
-# Security Policy
+# Política de Segurança
 
 Esta política descreve como tratamos a segurança da API GB Core, incluindo reporte de vulnerabilidades, manutenção de versões suportadas e boas práticas para contribuições seguras.
 
 ## Escopo
 
-- Aplica-se ao código localizado neste repositório (`master`, branches de release e branches de feature).
+- Aplica-se ao código localizado neste repositório (`main`, branches de release e branches de feature).
 - Engloba todas as superfícies expostas pela API (REST, filas/streams e integrações AWS).
 - Não cobre dependências externas fora do nosso controle operacional.
 
