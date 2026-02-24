@@ -8,8 +8,6 @@ services:
       - "3000"
     env_file:
       - .env
-    environment:
-      JWT_SECRET: ${JWT_SECRET}
     logging:
       driver: "json-file"
       options:
@@ -22,15 +20,17 @@ services:
     image: cloudflare/cloudflared:latest
     restart: always
     command: tunnel run
-    environment:
-      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    env_file:
+      - .env
     networks:
       - internal-net
+    depends_on:
+      - api
     logging:
-        driver: "json-file"
-        options:
-          max-size: "5m"
-          max-file: "3"
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
 
 networks:
   internal-net:
