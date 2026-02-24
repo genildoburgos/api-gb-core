@@ -1,4 +1,4 @@
-# Security Policy
+# Política de Segurança
 
 Esta política descreve como tratamos a segurança da API GB Core, incluindo reporte de vulnerabilidades, manutenção de versões suportadas e boas práticas para contribuições seguras.
 

@@ -1,15 +1,46 @@
 version: '3.8'
 
 services:
-  dynamodb-local:
-    container_name: dynamodb_local
-    image: "amazon/dynamodb-local:latest"
-    ports:
-      - "8000:8000"
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ."
-    working_dir: /home/dynamodblocal
-    volumes:
-      - dynamodb_data:/home/dynamodblocal
+  api:
+    image: genildodocker/api-gb-core:sha-a6549ad
+    restart: always
+    expose:
+      - "3000"
+    env_file:
+      - .env
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >
+          node -e "const http=require('http');const req=http.request({host:'127.0.0.1',port:3000,path:'/',timeout:2000},res=>{if(res.statusCode>=200&&res.statusCode<500){process.exit(0);}process.exit(1);});req.on('error',()=>process.exit(1));req.end();"
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - internal-net
 
-volumes:
-  dynamodb_data:
+  tunnel:
+    image: cloudflare/cloudflared:2024.12.0
+    restart: always
+    command: tunnel run
+    env_file:
+      - .env
+    networks:
+      - internal-net
+    depends_on:
+      api:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+networks:
+  internal-net:

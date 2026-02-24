@@ -1,84 +1,73 @@
-# Contributing to Image Management API
+# Guia de Contribuição – API GB Core
 
-First off, thank you for considering contributing to this project! It's people like you that make the open-source community such an amazing place to learn, inspire, and create.
+Obrigado por considerar contribuir com a API GB Core! Ao seguir estas orientações você ajuda a manter o fluxo de trabalho organizado e garante que cada mudança fortaleça este hub pessoal de automações e integrações com AWS.
 
-Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue or assessing improvements and features.
+## ⚡ Início Rápido
 
-## ⚡ Quick Start
+1. **Faça um fork** do repositório no GitHub.
+2. **Clone** o fork para sua máquina.
+3. **Instale as dependências**: `npm install`.
+4. **Configure o ambiente**: copie `.env.example` para `.env` e preencha as variáveis AWS/JWT (veja o `README.md`).
+5. **Crie uma branch**: `git checkout -b <tipo/minha-feature>`.
 
-1.  **Fork** the repository on GitHub.
-2.  **Clone** the project to your own machine.
-3.  **Install dependencies**: `npm install`
-4.  **Configure Environment**: Copy `.env.example` to `.env` and fill in your AWS/JWT credentials (see README.md for details).
-5.  **Create a Branch**: `git checkout -b <branch-name>`
+## 🛠 Fluxo de Desenvolvimento
 
-## 🛠 Development Workflow
+### 1. Convenção de Branches
 
-### 1. Branch Naming
+- `feat/<descrição>` – novas funcionalidades (ex.: `feat/cronograma-automacoes`).
+- `fix/<descrição>` – correções de bugs (ex.: `fix/upload-s3-timeout`).
+- `docs/<descrição>` – mudanças em documentação.
+- `chore/<descrição>` – tarefas auxiliares (deps, lint, scripts).
 
-We follow a simple naming convention for branches to keep things organized:
+### 2. Padrões de Código
 
-*   `feat/description`: For new features (e.g., `feat/user-profile-update`)
-*   `fix/description`: For bug fixes (e.g., `fix/s3-upload-error`)
-*   `docs/description`: For documentation changes
-*   `chore/description`: For maintenance tasks, dependencies, etc.
+- Siga o estilo recomendado pelo NestJS e respeite o lint configurado.
+- Evite `any`; prefira DTOs e interfaces tipadas.
+- Adicione comentários apenas quando o código não for autoexplicativo.
 
-### 2. Coding Standards
+### 3. Testes
 
-*   **Style**: This project uses the standard **NestJS** style guide.
-*   **Linting**: Ensure your code passes linting.
-*   **Types**: Avoid using `any` whenever possible. Use strict typing with TypeScript interfaces and DTOs.
+- Toda nova funcionalidade deve vir acompanhada de testes (`auth`, `users`, `images`, etc.).
+- Execute `npm run test` antes de abrir PR e garanta que o coverage não reduza.
+- Para fluxos fim a fim, use `npm run test:e2e`.
 
-### 3. Testing
+### 4. Mensagens de Commit
 
-This project maintains high test coverage (~90%).
+Use o padrão **Conventional Commits**: `<tipo>: <assunto>`
 
-*   **Unit Tests**: If you add functionality, you **must** add unit tests.
-*   **Run Tests**: Before pushing, ensure all tests pass:
-    ```bash
-    npm run test
-    ```
+Exemplos:
 
-### 4. Commit Messages
+- `feat: adicionar webhook do whatsapp`
+- `fix: corrigir validação de dto de imagem`
+- `docs: atualizar instruções de deploy docker`
+- `test: cobrir fluxo de refresh token`
 
-We encourage the use of **Conventional Commits** to ensure a clean history and automated changelogs in the future.
+## 🐛 Reporte de Bugs
 
-Format: `<type>: <subject>`
+Abra uma issue descrevendo:
 
-Examples:
-*   `feat: add delete image endpoint`
-*   `fix: resolve dynamoDB connection timeout`
-*   `docs: update readme with setup instructions`
-*   `test: add unit tests for auth service`
-
-## 🐛 Reporting Bugs
-
-Bugs are tracked as GitHub issues. When filing an issue, please include:
-
-1.  A clear title and description.
-2.  Steps to reproduce the bug.
-3.  Expected behavior vs. actual behavior.
-4.  Any relevant logs or screenshots.
+1. Título e resumo objetivo.
+2. Passo a passo para reproduzir o problema.
+3. Resultado esperado x resultado atual.
+4. Logs, prints ou payloads (mas sem segredos).
 
 ## 🚀 Pull Requests
 
-1.  Push your changes to your fork.
-2.  Submit a Pull Request to the `main` branch.
-3.  **Title**: Use the same convention as commit messages.
-4.  **Description**: Explain *what* you changed and *why*. Link to any relevant issues (e.g., "Fixes #123").
+1. Envie suas mudanças para o seu fork.
+2. Abra o PR contra a branch `master` deste repo.
+3. Título seguindo a convenção de commits.
+4. Descreva o **o que** e **por que** da mudança, referenciando issues quando existir (`Fixes #123`).
 
-### PR Checklist
+### Checklist do PR
 
-- [ ] My code follows the style guidelines of this project.
-- [ ] I have performed a self-review of my own code.
-- [ ] I have added tests that prove my fix is effective or that my feature works.
-- [ ] New and existing unit tests pass locally with my changes.
-- [ ] I have updated the documentation (if applicable).
+- [ ] Meu código segue o guia de estilo/lint do projeto.
+- [ ] Fiz auto-review e removi comentários/prints temporários.
+- [ ] Adicionei ou atualizei testes relevantes.
+- [ ] `npm run test` e `npm run lint` passam localmente.
+- [ ] Documentação/descrições foram atualizadas quando necessário.
 
 ---
 
-## ❓ Questions?
+## ❓ Dúvidas
 
-Feel free to open an issue if you have any questions or need clarification on the codebase.
-
-Happy Coding! 🚀
+Abra uma issue ou entre em contato via [LinkedIn](https://www.linkedin.com/in/genildoburgos). Obrigado por fortalecer a API GB Core! 🚀
