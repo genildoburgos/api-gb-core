@@ -1,259 +1,69 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank">
-    <img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" />
-  </a>
-</p>
-
-<h1 align="center">Image Management API</h1>
+# API GB Core 🚀
 
 <p align="center">
-  A robust backend application built with NestJS for managing users and their private image galleries, leveraging AWS for scalable storage and database services.
+	<img src="https://gb-core-imagens.s3.us-east-2.amazonaws.com/images/ea94b5fe-dbc5-4af3-9ced-dcb63b80c971/7aad0d8a-f433-4146-9f9c-64aa5ecfd68e.jpg" alt="GB Core Banner" style="max-width:100%; width:450px;">
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/NestJS-v10.x-red" alt="NestJS Version" />
-  <img src="https://img.shields.io/badge/TypeScript-v5.x-blue" alt="TypeScript Version" />
-  <img src="https://img.shields.io/badge/License-MIT-green" alt="License" />
-</p>
+Esta API é o núcleo dos meus serviços pessoais, servindo como uma ponte unificada entre diferentes domínios da minha vida. Ela não apenas armazena dados de produtividade, mas atua como o 'cérebro' para gatilhos de automação e gerenciamento de agentes de IA.
 
----
+## Visão
 
-## 📌 Description
+O objetivo da Api GB Core é ser o "Single Source of Truth" (Fonte Única de Verdade) para minha vida digital. Diferente de apps isolados, esta API centraliza lógica de negócios personalizada, permitindo que eu mude de interface (web, mobile ou CLI) sem perder a inteligência centralizada em estudos, carreira e automações.
 
-This project is a scalable server-side application designed to provide a secure and efficient way for users to manage their personal image collections.  
-It features a complete authentication system, integration with **Amazon S3** for file storage, and **Amazon DynamoDB** for a fast and flexible NoSQL database solution.  
-The API is fully unit-tested with **Jest**, ensuring high reliability and code quality.
+## Ideias para Explorar
 
----
+- **AI Budget Advisor**: Agente que analisa gastos e sugere investimentos baseados em metas de economia.
+- **Automated Study Tracker**: Integração com o calendário da UFAPE para notificar prazos de disciplinas.
+- **WhatsApp Agent Bridge**: Interface para que agentes autônomos respondam e executem tarefas via comandos de chat.
+- **Personal Knowledge Graph**: Conectar ideias e notas de estudo usando bancos de dados em nuvem.
 
-## ✨ Key Features
+## Configuração do NestJS
 
-- **Secure User Management**: User registration and JWT-based authentication.  
-- **AWS S3 Integration**: High-availability, durable, and scalable cloud storage for all images.  
-- **AWS DynamoDB Integration**: Fast, scalable NoSQL database for storing user and image metadata.  
-- **Image Operations**: Upload, list, search, and delete images, securely scoped to the authenticated user.  
-- **Data Export**: Performant export of a user's image metadata to a CSV file.  
-- **Robust Testing**: High unit test coverage (~90%) using Jest.  
-- **Configuration-driven**: Uses a `.env` file for easy configuration of credentials and settings.  
-- **Validation**: Built-in request validation (file size, type, etc.) using NestJS Pipes.  
+Esta API foi construída com [NestJS](https://nestjs.com/), um framework Node.js progressivo para construir aplicações server-side eficientes e escaláveis.
 
----
+### Documentação da API
 
-## 🛠️ Technology Stack
+A documentação Swagger está disponível em: `http://localhost:3000/api`
 
-- **Framework**: NestJS (Node.js, TypeScript)  
-- **Database**: Amazon DynamoDB (NoSQL)  
-- **File Storage**: Amazon S3  
-- **Authentication**: JSON Web Tokens (JWT)  
-- **Testing**: Jest  
+## Docker Hub
 
----
+A aplicação está disponível como imagem Docker no Docker Hub.
 
-## 🚀 Getting Started
+### Usando a Imagem
 
-### Prerequisites
+```bash
+# Pull da imagem
+docker pull genildodocker/api-gb-core:latest
 
-- Node.js (v18 or higher recommended)  
-- An AWS Account with IAM credentials (Access Key, Secret Key)  
-- An AWS S3 Bucket  
-- Two Amazon DynamoDB tables (`Users` and `Images`) configured  
+# Executar container
+docker run -p 3000:3000 \
+  -e AWS_REGION=us-east-2 \
+  -e AWS_ACCESS_KEY_ID=sua_access_key \
+  -e AWS_SECRET_ACCESS_KEY=sua_secret_key \
+  -e JWT_SECRET=sua_chave_secreta \
+  genildodocker/api-gb-core:latest
+```
 
-### Installation & Setup
+## Contribuindo
 
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/genildoburgos/ANJUN25_D03_COMPASSSTORE
-    cd ANJUN25_D03_COMPASSSTORE
-    ```
+Este é primariamente um workspace pessoal, mas contribuições são bem-vindas. Por favor, abra uma issue ou envie um PR descrevendo a mudança e o propósito. Prefira commits pequenos e focados com mensagens descritivas.
 
-2.  **Install dependencies**
-    ```bash
-    npm install
-    ```
+Consulte o guia completo em [`CONTRIBUTING.md`](./CONTRIBUTING.md) para detalhes de configuração local, convenções de branch, execução de testes e checklist de PR.
 
-3.  **Configure Environment Variables**
+## Segurança
 
-    Create a `.env` file in the root of the project by copying the example file:
+Siga o processo descrito em [`SECURITY.md`](./SECURITY.md) para reportar vulnerabilidades e garantir que contribuições atendam aos requisitos mínimos (auth, validação de dados, dependências e monitoramento).
 
-    ```bash
-    cp .env.example .env
-    ```
+## Licença
 
-    Fill it with your AWS and JWT credentials:
+Este projeto está licenciado sob a licença MIT. Leia [`LICENSE`](./LICENSE) para o texto integral e atribuições.
 
-    ```env
-    # AWS Configuration
-    AWS_REGION=us-east-1
-    PROVIDER_BUCKET=your-s3-bucket-name
-    PROVIDER_ACCESS_KEY_ID=your_aws_access_key
-    PROVIDER_SECRET_ACCESS_KEY=your_aws_secret_key
-    AWS_SESSION_TOKEN=your_aws_session_token # Optional
+## Contato
 
-    # JWT Configuration
-    JWT_SECRET=your_super_secret_jwt_key
-    JWT_EXPIRES_IN=3600s
-    ```
+Se você quiser discutir alguma ideia aqui: abra uma issue ou me encontre através do contato no meu perfil.
 
-### ▶️ Running the Application
+- Email: [gnldburgos@gmail.com](mailto:gnldburgos@gmail.com)
+- LinkedIn: [linkedin.com/in/genildoburgos](https://www.linkedin.com/in/genildoburgos)
 
--   **Development mode with watch:**
-    ```bash
-    npm run start:dev
-    ```
 
--   **Production mode:**
-    ```bash
-    npm run start:prod
-    ```
 
-The app will be running on <http://localhost:3000>.
-
----
-
-## 🧪 Running Tests
-
--   **Run all unit tests:**
-    ```bash
-    npm run test
-    ```
-
--   **Run tests and generate coverage report:**
-    ```bash
-    npm run test -- --coverage
-    ```
-
----
-
-## 📖 API Endpoints Documentation
-
-> **Note**: All protected routes require an `Authorization: Bearer <token>` header.
-
-### 🔑 Auth Endpoints
-
-#### Login
-
-`POST /auth/login` (Public)
-
--   **Request body:**
-
-    ```json
-    {
-      "email": "user@example.com",
-      "senha": "password123"
-    }
-    ```
-
--   **Response (200):**
-
-    ```json
-    {
-      "access_token": "ey..."
-    }
-    ```
-
-### 👤 Users Endpoints
-
-#### Create User
-
-`POST /users` (Public)
-
--   **Request body:**
-
-    ```json
-    {
-      "nome": "John Doe",
-      "email": "john.doe@example.com",
-      "senha": "strongPassword123"
-    }
-    ```
-
--   **Response (201):**
-
-    ```json
-    {
-      "id": "generated-uuid",
-      "nome": "John Doe",
-      "email": "john.doe@example.com"
-    }
-    ```
-
-#### Upload User Avatar
-
-`PATCH /users/avatar` (Protected)
-
--   **Request body:** `form-data` with a `file` field.
-
--   **Response (200):**
-
-    ```json
-    {
-      "message": "Avatar uploaded successfully!",
-      "avatarUrl": "https://..."
-    }
-    ```
-
-### 🖼️ Images Endpoints
-
-#### Upload an Image
-
-`POST /images/upload` (Protected)
-
--   **Request body:** `form-data` with a `file` field.
-
--   **Response (201):**
-
-    ```json
-    {
-      "message": "Image uploaded successfully!",
-      "data": {
-        "id": "image-uuid",
-        "userId": "user-uuid",
-        "s3Key": "images/user-uuid/...",
-        "url": "https://...",
-        "fileName": "original-filename.jpg",
-        "createdAt": 1678886400000
-      }
-    }
-    ```
-
-#### List User's Images
-
-`GET /images?page=1&limit=5&search=vacation` (Protected)
-
--   **Response (200):**
-
-    ```json
-    {
-      "data": [
-        { "id": "...", "url": "...", "fileName": "vacation-1.jpg", "createdAt": "..." }
-      ],
-      "total": 1,
-      "page": 1,
-      "limit": 5,
-      "totalPages": 1
-    }
-    ```
-
-#### Delete an Image
-
-`DELETE /images/:id` (Protected)
-
--   **Response (200):**
-
-    ```json
-    {
-      "message": "Image deleted successfully."
-    }
-    ```
-
-#### Export Images to CSV
-
-`GET /images/export/csv` (Protected)
-
--   **Response:** Triggers a CSV file download (`export-images-xxxx.csv`).
-
----
-
-📜 License
-
-This project is MIT licensed.

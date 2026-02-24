@@ -1,8 +1,8 @@
 {
-  "name": "anjun25_d03_compassstore",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "name": "api-gb-core",
+  "version": "0.1.0",
+  "description": "Núcleo unificado de automações pessoais, integrações AWS e agentes de IA.",
+  "author": "Genildo Burgos",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
