@@ -12,15 +12,24 @@ FROM node:18-alpine
 
 RUN apk add --no-cache openssl
 
+# Criar usuário e grupo não-root
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nestjs -u 1001 -G nodejs
+
 WORKDIR /app
 
 ENV NODE_ENV=production
 
 COPY package*.json ./
 
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev && \
+    npm cache clean --force
 
 COPY --from=builder /app/dist ./dist
+
+RUN chown -R nestjs:nodejs /app
+
+USER nestjs
 
 EXPOSE 3000
 
