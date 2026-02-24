@@ -54,7 +54,7 @@ Abra uma issue descrevendo:
 ## 🚀 Pull Requests
 
 1. Envie suas mudanças para o seu fork.
-2. Abra o PR contra a branch `main` deste repo.
+2. Abra o PR contra a branch `master` deste repo.
 3. Título seguindo a convenção de commits.
 4. Descreva o **o que** e **por que** da mudança, referenciando issues quando existir (`Fixes #123`).
 
