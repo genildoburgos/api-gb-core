@@ -48,9 +48,22 @@ docker run -p 3000:3000 \
 
 Este é primariamente um workspace pessoal, mas contribuições são bem-vindas. Por favor, abra uma issue ou envie um PR descrevendo a mudança e o propósito. Prefira commits pequenos e focados com mensagens descritivas.
 
+Consulte o guia completo em [`CONTRIBUTING.md`](./CONTRIBUTING.md) para detalhes de configuração local, convenções de branch, execução de testes e checklist de PR.
+
+## Segurança
+
+Siga o processo descrito em [`SECURITY.md`](./SECURITY.md) para reportar vulnerabilidades e garantir que contribuições atendam aos requisitos mínimos (auth, validação de dados, dependências e monitoramento).
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Leia [`LICENSE`](./LICENSE) para o texto integral e atribuições.
+
 ## Contato
 
 Se você quiser discutir alguma ideia aqui: abra uma issue ou me encontre através do contato no meu perfil.
+
+- Email: [gnldburgos@gmail.com](mailto:gnldburgos@gmail.com)
+- LinkedIn: [linkedin.com/in/genildoburgos](https://www.linkedin.com/in/genildoburgos)
 
 
 
