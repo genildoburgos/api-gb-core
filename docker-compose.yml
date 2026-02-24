@@ -1,15 +1,36 @@
 version: '3.8'
 
 services:
-  dynamodb-local:
-    container_name: dynamodb_local
-    image: "amazon/dynamodb-local:latest"
-    ports:
-      - "8000:8000"
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ."
-    working_dir: /home/dynamodblocal
-    volumes:
-      - dynamodb_data:/home/dynamodblocal
+  api:
+    image: genildodocker/api-gb-core
+    restart: always
+    expose:
+      - "3000"
+    env_file:
+      - .env
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - internal-net
 
-volumes:
-  dynamodb_data:
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    command: tunnel run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    networks:
+      - internal-net
+    logging:
+        driver: "json-file"
+        options:
+          max-size: "5m"
+          max-file: "3"
+
+networks:
+  internal-net:
