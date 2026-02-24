@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   api:
-    image: genildodocker/api-gb-core:latest
+    image: genildodocker/api-gb-core:sha-a6549ad
     restart: always
     expose:
       - "3000"
