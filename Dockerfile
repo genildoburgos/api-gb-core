@@ -20,4 +20,8 @@ COPY --from=builder /app/dist ./dist
 
 EXPOSE 3000
 
+# NOTE: This image expects required environment variables (e.g. AWS, JWT and other settings)
+# to be provided at runtime, for example using:
+#   docker run --env-file .env <image>
+# or via docker-compose / your orchestrator, based on .env.example in the repository.
 CMD ["node", "dist/main"]
