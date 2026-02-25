@@ -2,7 +2,7 @@
 import { Injectable, Inject, Logger, InternalServerErrorException, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { DynamoDBDocumentClient, PutCommand, QueryCommand, GetCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb';
 import { v4 as uuidv4 } from 'uuid';
-import { S3Service } from '../aws/s3.service';
+import { S3Service } from '../../aws/s3/s3.service';
 
 
 @Injectable()
