@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Test, TestingModule } from '@nestjs/testing';
 import { ImagesService } from '../images.service';
-import { S3Service } from '../../s3/s3.service';
+import { S3Service } from '../../../aws/s3/s3.service';
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 import { InternalServerErrorException, NotFoundException, ForbiddenException } from '@nestjs/common';
 
