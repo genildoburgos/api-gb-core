@@ -6,7 +6,7 @@ import { UsersModule } from '../users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthGuard } from './guard/auth.guard';
 import { RolesGuard } from './guard/roles.guard';
-import { ImagesModule } from 'src/images/images.module';
+import { ImagesModule } from 'src/storage/images/images.module';
 
 @Module({
   imports: [

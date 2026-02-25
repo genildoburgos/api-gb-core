@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './core/users/users.module';
 import { ConfigModule } from '@nestjs/config';
-import { DynamoDBModule } from './database/dynamodb.module';
-import { AuthModule } from './auth/auth.module';
-import { AwsModule } from './aws/aws.module';
-import { ImagesModule } from './images/images.module';
+import { DynamoDBModule } from './core/database/dynamodb.module';
+import { AuthModule } from './core/auth/auth.module';
+import { AwsModule } from './aws/s3/aws.module';
+import { ImagesModule } from './storage/images/images.module';
 
 @Module({
   imports: [
@@ -19,7 +17,5 @@ import { ImagesModule } from './images/images.module';
     AwsModule,
     ImagesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

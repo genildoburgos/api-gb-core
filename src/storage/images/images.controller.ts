@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Controller, Post, Get, Delete, UseGuards, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, Req, Query, Param, ParseIntPipe, DefaultValuePipe, Res} from '@nestjs/common';
-import { AuthGuard } from '../auth/guard/auth.guard';
+import { AuthGuard } from '../../core/auth/guard/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImagesService } from './images.service';
 import type { Request, Response } from 'express';
